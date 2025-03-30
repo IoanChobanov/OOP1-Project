@@ -2,6 +2,7 @@ package CLI;
 
 import Commands.*;
 import Exceptions.CommandException;
+import Sessions.SessionManager;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,9 +11,11 @@ import java.util.Scanner;
 
 public class RasterCLI {
     private final Map<String, CreateCommand> commands = new HashMap<>();
+    private final SessionManager sessionManager;
 
     public RasterCLI()
     {
+        this.sessionManager = new SessionManager();
         AddCommands(commands);
     }
 
@@ -43,7 +46,7 @@ public class RasterCLI {
     }
 
     public void AddCommands(Map<String, CreateCommand> commands) {
-        commands.put("load", new LoadCommand());
+        commands.put("load", new LoadCommand(sessionManager));
         commands.put("save", new SaveCommand());
         commands.put("saveas", new SaveAsCommand());
         commands.put("close", new CloseCommand());
@@ -56,7 +59,7 @@ public class RasterCLI {
         commands.put("undo", new UndoCommand());
         commands.put("add", new AddCommand());
         commands.put("session info", new SessionInfoCommand());
-        commands.put("switch", new SwitchSessionCommand());
+        commands.put("switch", new SwitchSessionCommand(sessionManager));
         commands.put("collage", new CollageCommand());
     }
 }

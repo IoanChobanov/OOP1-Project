@@ -1,4 +1,31 @@
 package ImageHandling;
 
+import java.io.File;
+import java.io.IOException;
+
 public abstract class Image {
+    protected int width;
+    protected int height;
+    protected int maxColorValue;
+    protected String format;
+    protected File file;
+
+    public Image(File file) {
+        this.file = file;
+    }
+
+    public abstract void load() throws IOException;
+    public abstract void save(File outputFile) throws IOException;
+
+    public String getFormat() {
+        return format;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
 }
