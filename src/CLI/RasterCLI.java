@@ -47,19 +47,19 @@ public class RasterCLI {
 
     public void AddCommands(Map<String, CreateCommand> commands) {
         commands.put("load", new LoadCommand(sessionManager));
-        commands.put("save", new SaveCommand());
+        commands.put("save", new SaveCommand(sessionManager));
         commands.put("saveas", new SaveAsCommand());
         commands.put("close", new CloseCommand());
         commands.put("help", new HelpCommand());
         commands.put("exit", new ExitCommand());
-        commands.put("grayscale", new GrayscaleCommand());
-        commands.put("monochrome", new MonochromeCommand());
+        commands.put("grayscale", new GrayscaleCommand(sessionManager));
+        commands.put("monochrome", new MonochromeCommand(sessionManager));
         commands.put("negative", new NegativeCommand());
-        commands.put("rotate", new RotateCommand());
-        commands.put("undo", new UndoCommand());
+        commands.put("rotate", new RotateCommand(sessionManager));
+        commands.put("undo", new UndoCommand(sessionManager));
         commands.put("add", new AddCommand());
         commands.put("session info", new SessionInfoCommand());
         commands.put("switch", new SwitchSessionCommand(sessionManager));
-        commands.put("collage", new CollageCommand());
+        commands.put("collage", new CollageCommand(sessionManager));
     }
 }

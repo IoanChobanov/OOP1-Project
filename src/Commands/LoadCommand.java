@@ -30,6 +30,6 @@ public class LoadCommand implements CreateCommand{
         Image image = ImageLoader.loadImage(file);
         image.load();
 
-        sessionManager.createSession(args[0]);
+        sessionManager.createSession(image);
     }
 }

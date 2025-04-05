@@ -1,5 +1,7 @@
 package Sessions;
 
+import ImageHandling.Image;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +17,7 @@ public class SessionManager {
         return activeSession;
     }
 
-    public void createSession(String image) {
+    public void createSession(Image image) {
         Session newSession = new Session(image);
         sessions.put(newSession.getSessionId(), newSession);
         activeSession = newSession;

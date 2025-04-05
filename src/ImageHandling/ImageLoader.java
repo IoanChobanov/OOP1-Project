@@ -1,6 +1,8 @@
 package ImageHandling;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class ImageLoader {
@@ -20,7 +22,16 @@ public class ImageLoader {
     }
 
     private static String getMagicNumber(File file) throws IOException {
-        return java.nio.file.Files.readAllLines(file.toPath()).get(0).trim();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                if (!line.isEmpty() && !line.startsWith("#")) {
+                    return line;
+                }
+            }
+        }
+        throw new IOException("No magic number found in file.");
     }
 }
 

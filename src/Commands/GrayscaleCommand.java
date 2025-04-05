@@ -1,8 +1,17 @@
 package Commands;
 
+import Sessions.SessionManager;
+
 public class GrayscaleCommand implements CreateCommand{
+    private final SessionManager sessionManager;
+
+    public GrayscaleCommand(SessionManager sessionManager) {
+        this.sessionManager = sessionManager;
+    }
+
     @Override
     public void create(String... args) {
-        System.out.println("Queued grayscale filter for all images in the current session.");
+        sessionManager.getActiveSession().addTransformation("grayscale");
+        System.out.println("Queued grayscale filter for all images in the session.");
     }
 }
