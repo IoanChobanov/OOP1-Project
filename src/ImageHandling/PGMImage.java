@@ -38,8 +38,62 @@ public class PGMImage extends Image {
     }
 
     @Override
+    public void applyGrayscale() {
+        System.out.println("Grayscale transformation not suitable for PGM.");
+    }
+
+    @Override
+    public void applyMonochrome() {
+        System.out.println("Monochrome transformation not suitable for PGM.");
+    }
+
+    @Override
+    public void applyNegative() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                pixels[i][j] = maxColorValue - pixels[i][j];
+            }
+        }
+        System.out.println("Applied negative to PGM image.");
+    }
+
+    @Override
+    public void applyRotation(String direction) {
+        int[][] newPixels = new int[width][height];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (direction.equals("left")) {
+                    newPixels[j][height - 1 - i] = pixels[i][j];
+                } else {
+                    newPixels[width - 1 - j][i] = pixels[i][j];
+                }
+            }
+        }
+        pixels = newPixels;
+        System.out.println("Applied " + direction + " rotation to PGM image.");
+    }
+
+    @Override
+    public void applyCollage(String layout, String img1, String img2, String outimg) {
+        //to do
+    }
+
+    @Override
     public void save(File outputFile) throws IOException {
-        // to be implemented2
+        StringBuilder sb = new StringBuilder();
+        sb.append("P2\n");
+        sb.append(width).append(" ").append(height).append("\n");
+        sb.append(maxColorValue).append("\n");
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                sb.append(pixels[i][j]).append(" ");
+            }
+            sb.append("\n");
+        }
+
+        Files.write(outputFile.toPath(), sb.toString().getBytes());
+        System.out.println("Saved PGM image to " + outputFile.getAbsolutePath());
     }
 }
 

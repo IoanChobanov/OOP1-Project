@@ -37,8 +37,61 @@ public class PBMImage extends Image {
     }
 
     @Override
+    public void applyGrayscale() {
+        System.out.println("Grayscale transformation not suitable for PBM.");
+    }
+
+    @Override
+    public void applyMonochrome() {
+        System.out.println("Monochrome transformation not suitable for PBM.");
+    }
+
+    @Override
+    public void applyNegative() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                pixels[i][j] = !pixels[i][j];
+            }
+        }
+        System.out.println("Applied negative to PBM image.");
+    }
+
+    @Override
+    public void applyRotation(String direction) {
+        boolean[][] newPixels = new boolean[width][height];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (direction.equals("left")) {
+                    newPixels[j][height - 1 - i] = pixels[i][j];
+                } else {
+                    newPixels[width - 1 - j][i] = pixels[i][j];
+                }
+            }
+        }
+        pixels = newPixels;
+        System.out.println("Applied " + direction + " rotation to PBM image.");
+    }
+
+    @Override
+    public void applyCollage(String layout, String img1, String img2, String outimg) {
+       //to do
+    }
+
+    @Override
     public void save(File outputFile) throws IOException {
-        // to be implemented1
+        StringBuilder sb = new StringBuilder();
+        sb.append("P1\n");
+        sb.append(width).append(" ").append(height).append("\n");
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                sb.append(pixels[i][j] ? "1" : "0").append(" ");
+            }
+            sb.append("\n");
+        }
+
+        Files.write(outputFile.toPath(), sb.toString().getBytes());
+        System.out.println("Saved PBM image to " + outputFile.getAbsolutePath());
     }
 }
 

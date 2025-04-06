@@ -20,16 +20,25 @@ public class LoadCommand implements CreateCommand{
         if(args.length == 0){
             throw new CommandException("You need to load at least 1 file! Use 'help' for more information.");
         }
-        System.out.println("Session with ID: " + args[0] + " started");
 
-        File file = new File(args[0]);
-        if (!file.exists()) {
-            throw new IOException("File not found: " + args[0]);
+        for (String fileName : args) {
+            File file = new File(fileName);
+
+            if (!file.exists()) {
+                throw new IOException("File not found: " + fileName);
+            }
+
+            Image image = ImageLoader.loadImage(file);
+            image.load();
+
+            if (sessionManager.getActiveSession() == null) {
+                sessionManager.createSession(image);
+            } else {
+                sessionManager.getActiveSession().addImage(image);
+            }
+
+            System.out.println("Loaded image: " + fileName);
+            System.out.println("Session started.");
         }
-
-        Image image = ImageLoader.loadImage(file);
-        image.load();
-
-        sessionManager.createSession(image);
     }
 }

@@ -4,6 +4,9 @@ import ImageHandling.Image;
 import Sessions.Session;
 import Sessions.SessionManager;
 
+import java.io.File;
+import java.io.IOException;
+
 public class SaveCommand implements CreateCommand{
     private final SessionManager sessionManager;
 
@@ -31,45 +34,34 @@ public class SaveCommand implements CreateCommand{
 
     private void applyTransformation(Image image, String transformation) {
         String[] parts = transformation.split(" ", 2);
+        String action = parts[0];
+        String arguments = (parts.length > 1) ? parts[1] : "";
 
-        switch (parts[0]) {
+        switch (action) {
             case "grayscale":
+                image.applyGrayscale();
                 break;
             case "monochrome":
+                image.applyMonochrome();
                 break;
             case "negative":
+                image.applyNegative();
                 break;
             case "rotate":
-                applyRotation(parts[1]);
+                image.applyRotation(arguments);
                 break;
             case "collage":
-                applyCollage(parts[1]);
+                String[] collageArgs = arguments.split(" ");
+                if (collageArgs.length == 4) {
+                    image.applyCollage(collageArgs[0], collageArgs[1], collageArgs[2], collageArgs[3]);
+                } else {
+                    System.out.println("Invalid collage arguments.");
+                }
                 break;
             default:
-                System.out.println("Unknown transformation: " + transformation);
+                System.out.println("Unknown transformation: " + action);
+                break;
         }
     }
 
-    private void applyRotation(String direction) {
-        if (direction.equals("left")) {
-            System.out.println("Applying left rotation to all images.");
-        } else if (direction.equals("right")) {
-            System.out.println("Applying right rotation to all images.");
-        }
-    }
-
-    private void applyCollage(String args) {
-        String[] collageArgs = args.split(" ");
-        if (collageArgs.length != 4) {
-            System.out.println("Invalid collage arguments.");
-            return;
-        }
-
-        String layout = collageArgs[0];
-        String img1 = collageArgs[1];
-        String img2 = collageArgs[2];
-        String outimg = collageArgs[3];
-
-        System.out.println("Applying collage with layout " + layout + " using images " + img1 + " and " + img2 + " to create " + outimg);
-    }
 }
