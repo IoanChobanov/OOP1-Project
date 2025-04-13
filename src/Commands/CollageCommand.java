@@ -10,7 +10,7 @@ public class CollageCommand implements CreateCommand{
     }
 
     @Override
-    public void create(String... args) {
+    public void execute(String... args) {
         if (args.length != 4) {
             System.out.println("Invalid arguments. Expected 4 arguments for collage: layout, img1, img2, outimg.");
             return;

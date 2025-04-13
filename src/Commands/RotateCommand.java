@@ -10,7 +10,7 @@ public class RotateCommand implements CreateCommand{
     }
 
     @Override
-    public void create(String... args) {
+    public void execute(String... args) {
         if (args.length != 1 || (!args[0].equals("left") && !args[0].equals("right"))) {
             System.out.println("Invalid arguments. Use 'rotate left' or 'rotate right'.");
             return;

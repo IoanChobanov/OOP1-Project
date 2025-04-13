@@ -10,7 +10,7 @@ public class MonochromeCommand implements CreateCommand{
     }
 
     @Override
-    public void create(String... args)  {
+    public void execute(String... args)  {
         sessionManager.getActiveSession().addTransformation("monochrome");
         System.out.println("Queued monochrome filter for all images in the session.");
     }

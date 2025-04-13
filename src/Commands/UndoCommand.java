@@ -11,7 +11,7 @@ public class UndoCommand implements CreateCommand{
     }
 
     @Override
-    public void create(String... args) {
+    public void execute(String... args) {
         Session activeSession = sessionManager.getActiveSession();
 
         if (activeSession == null) {
@@ -20,7 +20,7 @@ public class UndoCommand implements CreateCommand{
         }
 
         if (!activeSession.getTransformations().isEmpty()) {
-            activeSession.getTransformations().remove(activeSession.getTransformations().size() - 1);
+            activeSession.removeLastTransformation();
             System.out.println("One change undone.");
         } else {
             System.out.println("No transformations to undo.");

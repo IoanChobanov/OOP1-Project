@@ -4,9 +4,6 @@ import ImageHandling.Image;
 import Sessions.Session;
 import Sessions.SessionManager;
 
-import java.io.File;
-import java.io.IOException;
-
 public class SaveCommand implements CreateCommand{
     private final SessionManager sessionManager;
 
@@ -15,7 +12,7 @@ public class SaveCommand implements CreateCommand{
     }
 
     @Override
-    public void create(String... args) {
+    public void execute(String... args) {
         Session activeSession = sessionManager.getActiveSession();
 
         if (activeSession == null) {

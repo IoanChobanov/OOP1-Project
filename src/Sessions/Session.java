@@ -11,11 +11,10 @@ public class Session {
     private final List<Image> images;
     private final List<String> transformations;
 
-    public Session(Image initialImage) {
+    public Session(List<Image> images) {
         this.sessionId = ++sessionCounter;
-        this.images = new ArrayList<>();
+        this.images = new ArrayList<>(images);
         this.transformations = new ArrayList<>();
-        this.images.add(initialImage);
     }
 
     public int getSessionId() {
@@ -36,6 +35,12 @@ public class Session {
 
     public List<String> getTransformations() {
         return transformations;
+    }
+
+    public void removeLastTransformation() {
+        if (!transformations.isEmpty()) {
+            transformations.remove(transformations.size() - 1);
+        }
     }
 }
 

@@ -2,7 +2,7 @@ package Commands;
 
 public class HelpCommand implements CreateCommand{
     @Override
-    public void create(String... args) {
+    public void execute(String... args) {
         String helpMessage = "The following commands are supported:\n" +
                 "load <file> - Starts a session and loads images.\n" +
                 "save - Saves all images in the current session.\n" +

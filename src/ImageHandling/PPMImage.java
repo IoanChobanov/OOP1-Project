@@ -36,7 +36,7 @@ public class PPMImage extends Image {
             row++;
         }
 
-        System.out.println("Loaded PPM Image: " + width + "x" + height);
+        System.out.println("PPM Image: " + width + "x" + height);
     }
 
     @Override

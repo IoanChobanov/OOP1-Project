@@ -33,7 +33,7 @@ public class PBMImage extends Image {
             row++;
         }
 
-        System.out.println("Loaded PBM Image: " + width + "x" + height);
+        System.out.println("PBM Image: " + width + "x" + height);
     }
 
     @Override

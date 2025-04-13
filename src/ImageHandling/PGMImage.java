@@ -34,7 +34,7 @@ public class PGMImage extends Image {
             row++;
         }
 
-        System.out.println("Loaded PGM Image: " + width + "x" + height);
+        System.out.println("PGM Image: " + width + "x" + height);
     }
 
     @Override

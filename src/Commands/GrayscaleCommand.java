@@ -10,7 +10,7 @@ public class GrayscaleCommand implements CreateCommand{
     }
 
     @Override
-    public void create(String... args) {
+    public void execute(String... args) {
         sessionManager.getActiveSession().addTransformation("grayscale");
         System.out.println("Queued grayscale filter for all images in the session.");
     }

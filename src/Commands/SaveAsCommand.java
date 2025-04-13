@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class SaveAsCommand implements CreateCommand{
     @Override
-    public void create(String... args) throws IOException {
+    public void execute(String... args) throws IOException {
         if (args.length != 1) {
             throw new IllegalArgumentException("Expected 1 argument. Use 'help' for more information.");
         }
