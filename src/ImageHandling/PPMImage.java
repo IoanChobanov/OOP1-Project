@@ -117,5 +117,24 @@ public class PPMImage extends Image {
         Files.write(outputFile.toPath(), sb.toString().getBytes());
         System.out.println("Saved PPM image to " + outputFile.getAbsolutePath());
     }
+
+    @Override
+    public Image cloneImage() {
+        PPMImage copy = new PPMImage(new File(file.getPath()));
+        copy.width = this.width;
+        copy.height = this.height;
+        copy.format = this.format;
+        copy.maxColorValue = this.maxColorValue;
+
+        copy.pixels = new int[height][width][3];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                System.arraycopy(this.pixels[i][j], 0, copy.pixels[i][j], 0, 3);
+            }
+        }
+
+        return copy;
+    }
+
 }
 

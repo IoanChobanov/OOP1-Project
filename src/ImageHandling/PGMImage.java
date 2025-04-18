@@ -95,5 +95,22 @@ public class PGMImage extends Image {
         Files.write(outputFile.toPath(), sb.toString().getBytes());
         System.out.println("Saved PGM image to " + outputFile.getAbsolutePath());
     }
+
+    @Override
+    public Image cloneImage() {
+        PGMImage copy = new PGMImage(new File(file.getPath()));
+        copy.width = this.width;
+        copy.height = this.height;
+        copy.format = this.format;
+        copy.maxColorValue = this.maxColorValue;
+
+        copy.pixels = new int[height][width];
+        for (int i = 0; i < height; i++) {
+            System.arraycopy(this.pixels[i], 0, copy.pixels[i], 0, width);
+        }
+
+        return copy;
+    }
+
 }
 

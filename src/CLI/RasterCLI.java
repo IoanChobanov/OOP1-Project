@@ -56,7 +56,7 @@ public class RasterCLI {
     public void InitializeCommands() {
         commands.put("load", new LoadCommand(sessionManager));
         commands.put("save", new SaveCommand(sessionManager));
-        commands.put("saveas", new SaveAsCommand());
+        commands.put("saveas", new SaveAsCommand(sessionManager));
         commands.put("close", new CloseCommand(sessionManager));
         commands.put("help", new HelpCommand());
         commands.put("exit", new ExitCommand());

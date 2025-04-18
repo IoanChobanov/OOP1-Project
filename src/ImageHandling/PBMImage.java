@@ -93,5 +93,19 @@ public class PBMImage extends Image {
         Files.write(outputFile.toPath(), sb.toString().getBytes());
         System.out.println("Saved PBM image to " + outputFile.getAbsolutePath());
     }
+
+    @Override
+    public Image cloneImage() {
+        PBMImage clone = new PBMImage(this.file);
+        clone.width = this.width;
+        clone.height = this.height;
+        clone.format = this.format;
+        clone.pixels = new boolean[this.height][this.width];
+        for (int i = 0; i < height; i++) {
+            System.arraycopy(this.pixels[i], 0, clone.pixels[i], 0, width);
+        }
+        return clone;
+    }
+
 }
 
