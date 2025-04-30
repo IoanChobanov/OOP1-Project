@@ -4,6 +4,9 @@ import ImageHandling.Image;
 import Sessions.Session;
 import Sessions.SessionManager;
 
+import java.io.File;
+import java.io.IOException;
+
 public class SaveCommand implements CreateCommand{
     private final SessionManager sessionManager;
 
@@ -12,7 +15,7 @@ public class SaveCommand implements CreateCommand{
     }
 
     @Override
-    public void execute(String... args) {
+    public void execute(String... args) throws IOException {
         Session activeSession = sessionManager.getActiveSession();
 
         if (activeSession == null) {
@@ -24,13 +27,15 @@ public class SaveCommand implements CreateCommand{
             for (String transformation : activeSession.getTransformations()) {
                 applyTransformation(image, transformation);
             }
+            File outputFile = new File(image.getFile().getAbsolutePath());
+            image.save(outputFile);
         }
 
         System.out.println("Saved successfully!");
     }
 
     private void applyTransformation(Image image, String transformation) {
-        String[] parts = transformation.split(" ", 2);
+        String[] parts = transformation.split("_", 2);
         String action = parts[0];
         String arguments = (parts.length > 1) ? parts[1] : "";
 

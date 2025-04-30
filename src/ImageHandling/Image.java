@@ -36,4 +36,8 @@ public abstract class Image {
     public int getWidth() {
         return width;
     }
+
+    public File getFile() {
+        return file;
+    }
 }

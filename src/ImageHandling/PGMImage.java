@@ -63,9 +63,9 @@ public class PGMImage extends Image {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (direction.equals("left")) {
-                    newPixels[j][height - 1 - i] = pixels[i][j];
-                } else {
                     newPixels[width - 1 - j][i] = pixels[i][j];
+                } else {
+                    newPixels[j][height - 1 - i] = pixels[i][j];
                 }
             }
         }

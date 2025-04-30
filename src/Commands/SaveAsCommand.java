@@ -39,7 +39,7 @@ public class SaveAsCommand implements CreateCommand {
     }
 
     private void applyTransformation(Image image, String transformation) {
-        String[] parts = transformation.split("", 2);
+        String[] parts = transformation.split("_", 2);
         String action = parts[0];
         String arguments = (parts.length > 1) ? parts[1] : "";
 

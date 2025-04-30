@@ -29,7 +29,22 @@ public class AddCommand implements CreateCommand {
 
         File file = new File(args[0]);
         if (!file.exists()) {
-            throw new IOException("File not found: " + args[0]);
+            file = new File("example_images/" + args[0]);
+        }
+
+        String imagePath = file.getCanonicalPath();
+        boolean alreadyLoaded = activeSession.getImages().stream()
+                .anyMatch(img -> {
+                    try {
+                        return img.getFile().getCanonicalPath().equals(imagePath);
+                    } catch (IOException e) {
+                        return false;
+                    }
+                });
+
+        if (alreadyLoaded) {
+            System.out.println("Image " + args[0] + " already exists in the session. Skipping.");
+            return;
         }
 
         Image image = ImageLoader.loadImage(file);
