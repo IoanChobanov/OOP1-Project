@@ -1,5 +1,7 @@
 package Commands;
 
+import Exceptions.CommandException;
+import Sessions.Session;
 import Sessions.SessionManager;
 
 public class GrayscaleCommand implements CreateCommand{
@@ -10,8 +12,9 @@ public class GrayscaleCommand implements CreateCommand{
     }
 
     @Override
-    public void execute(String... args) {
-        sessionManager.getActiveSession().addTransformation("grayscale");
+    public void execute(String... args) throws CommandException {
+        Session activeSession = sessionManager.getValidatedActiveSession();
+        activeSession.addTransformation("grayscale");
         System.out.println("Queued grayscale filter for all images in the session.");
     }
 }

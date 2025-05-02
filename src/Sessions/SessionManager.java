@@ -5,6 +5,7 @@ import ImageHandling.Image;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import Exceptions.CommandException;
 
 public class SessionManager {
     private final Map<Integer, Session> sessions;
@@ -14,6 +15,12 @@ public class SessionManager {
         this.sessions = new HashMap<>();
     }
 
+    public Session getValidatedActiveSession() throws CommandException {
+        if (activeSession == null) {
+            throw new CommandException("No active session. Use 'load' to start a new session or switch to an existing one.");
+        }
+        return activeSession;
+    }
     public Session getActiveSession() {
         return activeSession;
     }
@@ -40,5 +47,6 @@ public class SessionManager {
             activeSession = null;
         }
     }
+
 }
 

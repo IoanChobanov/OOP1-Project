@@ -1,5 +1,6 @@
 package Commands;
 
+import Exceptions.CommandException;
 import Sessions.Session;
 import Sessions.SessionManager;
 
@@ -11,15 +12,11 @@ public class SessionInfoCommand implements CreateCommand {
     }
 
     @Override
-    public void execute(String... args) {
-        Session session = sessionManager.getActiveSession();
-        if (session == null) {
-            System.out.println("No active session.");
-            return;
-        }
+    public void execute(String... args) throws CommandException {
+        Session activeSession = sessionManager.getValidatedActiveSession();
 
-        System.out.println("Session ID: " + session.getSessionId());
-        System.out.println("Number of images: " + session.getImages().size());
-        System.out.println("Transformations queued: " + session.getTransformations());
+        System.out.println("Session ID: " + activeSession.getSessionId());
+        System.out.println("Number of images: " + activeSession.getImages().size());
+        System.out.println("Transformations queued: " + activeSession.getTransformations());
     }
 }

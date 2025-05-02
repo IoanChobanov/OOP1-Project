@@ -62,7 +62,7 @@ public class RasterCLI {
         commands.put("exit", new ExitCommand());
         commands.put("grayscale", new GrayscaleCommand(sessionManager));
         commands.put("monochrome", new MonochromeCommand(sessionManager));
-        commands.put("negative", new NegativeCommand());
+        commands.put("negative", new NegativeCommand(sessionManager));
         commands.put("rotate", new RotateCommand(sessionManager));
         commands.put("undo", new UndoCommand(sessionManager));
         commands.put("add", new AddCommand(sessionManager));

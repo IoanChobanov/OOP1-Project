@@ -1,5 +1,7 @@
 package Commands;
 
+import Exceptions.CommandException;
+import Sessions.Session;
 import Sessions.SessionManager;
 import java.io.IOException;
 
@@ -11,11 +13,8 @@ public class CloseCommand implements CreateCommand {
     }
 
     @Override
-    public void execute(String... args) throws IOException {
-        if (sessionManager.getActiveSession() == null) {
-            System.out.println("No active session to close.");
-            return;
-        }
+    public void execute(String... args) throws IOException, CommandException {
+        Session activeSession = sessionManager.getValidatedActiveSession();
 
         sessionManager.removeActiveSession();
         System.out.println("Session closed successfully. All unsaved changes were discarded.");

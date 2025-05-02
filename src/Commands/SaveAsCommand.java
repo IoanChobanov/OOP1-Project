@@ -1,5 +1,6 @@
 package Commands;
 
+import Exceptions.CommandException;
 import ImageHandling.Image;
 import Sessions.Session;
 import Sessions.SessionManager;
@@ -15,21 +16,17 @@ public class SaveAsCommand implements CreateCommand {
     }
 
     @Override
-    public void execute(String... args) throws IOException {
+    public void execute(String... args) throws IOException, CommandException {
+        Session activeSession = sessionManager.getValidatedActiveSession();
+
         if (args.length != 1) {
-            throw new IllegalArgumentException("Expected 1 argument. Use 'help' for more information.");
+            throw new CommandException("Expected 1 argument. Use 'help' for more information.");
         }
 
-        Session session = sessionManager.getActiveSession();
-        if (session == null || session.getImages().isEmpty()) {
-            System.out.println("No active session or no images loaded.");
-            return;
-        }
-
-        Image original = session.getImages().get(0);
+        Image original = activeSession.getImages().get(0);
         Image clone = original.cloneImage();
 
-        for (String transformation : session.getTransformations()) {
+        for (String transformation : activeSession.getTransformations()) {
             applyTransformation(clone, transformation);
         }
 

@@ -18,7 +18,6 @@ public abstract class Image {
     public abstract void save(File outputFile) throws IOException;
     public abstract Image cloneImage();
 
-
     public abstract void applyGrayscale();
     public abstract void applyMonochrome();
     public abstract void applyNegative();

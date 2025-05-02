@@ -1,5 +1,6 @@
 package Commands;
 
+import Exceptions.CommandException;
 import ImageHandling.Image;
 import Sessions.Session;
 import Sessions.SessionManager;
@@ -15,13 +16,8 @@ public class SaveCommand implements CreateCommand{
     }
 
     @Override
-    public void execute(String... args) throws IOException {
-        Session activeSession = sessionManager.getActiveSession();
-
-        if (activeSession == null) {
-            System.out.println("No active session found.");
-            return;
-        }
+    public void execute(String... args) throws IOException, CommandException {
+        Session activeSession = sessionManager.getValidatedActiveSession();
 
         for (Image image : activeSession.getImages()) {
             for (String transformation : activeSession.getTransformations()) {

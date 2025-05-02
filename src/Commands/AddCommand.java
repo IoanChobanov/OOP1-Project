@@ -18,13 +18,10 @@ public class AddCommand implements CreateCommand {
 
     @Override
     public void execute(String... args) throws CommandException, IOException {
+        Session activeSession = sessionManager.getValidatedActiveSession();
+        
         if (args.length != 1) {
             throw new CommandException("Expected 1 argument. Use 'help' for more information.");
-        }
-
-        Session activeSession = sessionManager.getActiveSession();
-        if (activeSession == null) {
-            throw new CommandException("No active session. Use 'load' to start a new session.");
         }
 
         File file = new File(args[0]);

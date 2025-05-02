@@ -1,5 +1,7 @@
 package Commands;
 
+import Exceptions.CommandException;
+import Sessions.Session;
 import Sessions.SessionManager;
 
 public class RotateCommand implements CreateCommand{
@@ -10,14 +12,16 @@ public class RotateCommand implements CreateCommand{
     }
 
     @Override
-    public void execute(String... args) {
+    public void execute(String... args) throws CommandException {
+        Session activeSession = sessionManager.getValidatedActiveSession();
+
         if (args.length != 1 || (!args[0].equals("left") && !args[0].equals("right"))) {
             System.out.println("Invalid arguments. Use 'rotate left' or 'rotate right'.");
             return;
         }
 
         String transformation = "rotate_" + args[0];
-        sessionManager.getActiveSession().addTransformation(transformation);
+        activeSession.addTransformation(transformation);
 
         System.out.println("Queued " + args[0] + " rotation for all images in the session.");
     }

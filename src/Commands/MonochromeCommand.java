@@ -1,5 +1,7 @@
 package Commands;
 
+import Exceptions.CommandException;
+import Sessions.Session;
 import Sessions.SessionManager;
 
 public class MonochromeCommand implements CreateCommand{
@@ -10,8 +12,9 @@ public class MonochromeCommand implements CreateCommand{
     }
 
     @Override
-    public void execute(String... args)  {
-        sessionManager.getActiveSession().addTransformation("monochrome");
+    public void execute(String... args) throws CommandException {
+        Session activeSession = sessionManager.getValidatedActiveSession();
+        activeSession.addTransformation("monochrome");
         System.out.println("Queued monochrome filter for all images in the session.");
     }
 }
