@@ -1,6 +1,7 @@
 package Commands;
 
 import Exceptions.CommandException;
+import ImageHandling.Image;
 import Sessions.Session;
 import Sessions.SessionManager;
 

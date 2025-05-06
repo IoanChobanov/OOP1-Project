@@ -1,6 +1,7 @@
 package Commands;
 
 import Exceptions.CommandException;
+import ImageHandling.Image;
 import Sessions.Session;
 import Sessions.SessionManager;
 
@@ -16,7 +17,19 @@ public class SessionInfoCommand implements CreateCommand {
         Session activeSession = sessionManager.getValidatedActiveSession();
 
         System.out.println("Session ID: " + activeSession.getSessionId());
-        System.out.println("Number of images: " + activeSession.getImages().size());
-        System.out.println("Transformations queued: " + activeSession.getTransformations());
+        System.out.println(activeSession.getTransformations().isEmpty() ?
+                "No transformations queued." :
+                "Transformations queued (" + activeSession.getTransformations().size() + "): " + activeSession.getTransformations());
+        System.out.println("\nImages in session (" + activeSession.getImages().size() + "):");
+
+        int imageCounter = 1;
+        for (Image image : activeSession.getImages()) {
+            System.out.printf("%d. %s (%s, %dx%d)%n",
+                    imageCounter++,
+                    image.getFile().getName(),
+                    image.getFormat(),
+                    image.getWidth(),
+                    image.getHeight());
+        }
     }
 }

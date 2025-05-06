@@ -21,6 +21,7 @@ public class SessionManager {
         }
         return activeSession;
     }
+
     public Session getActiveSession() {
         return activeSession;
     }
@@ -37,7 +38,7 @@ public class SessionManager {
             activeSession = sessions.get(sessionId);
             System.out.println("Switched to session ID: " + sessionId);
         } else {
-            System.out.println("Session ID " + sessionId + " does not exist.");
+            System.out.println("Session with ID " + sessionId + " does not exist.");
         }
     }
 

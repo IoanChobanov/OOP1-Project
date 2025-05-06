@@ -1,5 +1,7 @@
 package ImageHandling;
 
+import Exceptions.CommandException;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,6 +9,7 @@ import java.util.List;
 
 public class PGMImage extends Image {
     private int[][] pixels;
+    private static final double DEFAULT_THRESHOLD = 0.5;
 
     public PGMImage(File file) {
         super(file);
@@ -44,7 +47,20 @@ public class PGMImage extends Image {
 
     @Override
     public void applyMonochrome() {
-        System.out.println("Monochrome transformation not suitable for PGM.");
+        double complianceRatio = getMonochromeComplianceRatio();
+        if (complianceRatio >= DEFAULT_THRESHOLD) {
+            System.out.printf("Skipped monochrome: %.1f%% of pixels already monochrome.%n",
+                    complianceRatio * 100);
+            return;
+        }
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                pixels[i][j] = (pixels[i][j] > maxColorValue/2)
+                        ? maxColorValue : 0;
+            }
+        }
+        System.out.println("Applied monochrome to PGM image.");
     }
 
     @Override
@@ -70,11 +86,15 @@ public class PGMImage extends Image {
             }
         }
         pixels = newPixels;
+
+        int temp = width;
+        width = height;
+        height = temp;
         System.out.println("Applied " + direction + " rotation to PGM image.");
     }
 
     @Override
-    public void applyCollage(String layout, String img1, String img2, String outimg) {
+    public void applyCollage(String direction, Image image1, Image image2) throws CommandException {
         //to do
     }
 
@@ -112,5 +132,16 @@ public class PGMImage extends Image {
         return copy;
     }
 
+    public double getMonochromeComplianceRatio() {
+        int monoPixels = 0;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (pixels[i][j] == 0 || pixels[i][j] == maxColorValue) {
+                    monoPixels++;
+                }
+            }
+        }
+        return (double) monoPixels / (width * height);
+    }
 }
 

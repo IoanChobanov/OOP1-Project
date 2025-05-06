@@ -51,7 +51,7 @@ public class SaveCommand implements CreateCommand{
             case "collage":
                 String[] collageArgs = arguments.split(" ");
                 if (collageArgs.length == 4) {
-                    image.applyCollage(collageArgs[0], collageArgs[1], collageArgs[2], collageArgs[3]);
+                    //to do
                 } else {
                     System.out.println("Invalid collage arguments.");
                 }

@@ -1,5 +1,7 @@
 package ImageHandling;
 
+import Exceptions.CommandException;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -62,19 +64,23 @@ public class PBMImage extends Image {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (direction.equals("left")) {
-                    newPixels[j][height - 1 - i] = pixels[i][j];
-                } else {
                     newPixels[width - 1 - j][i] = pixels[i][j];
+                } else {
+                    newPixels[j][height - 1 - i] = pixels[i][j];
                 }
             }
         }
         pixels = newPixels;
+
+        int temp = width;
+        width = height;
+        height = temp;
         System.out.println("Applied " + direction + " rotation to PBM image.");
     }
 
     @Override
-    public void applyCollage(String layout, String img1, String img2, String outimg) {
-       //to do
+    public void applyCollage(String direction, Image image1, Image image2) throws CommandException {
+        //to do
     }
 
     @Override

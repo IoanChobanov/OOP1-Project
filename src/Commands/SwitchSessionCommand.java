@@ -1,6 +1,8 @@
 package Commands;
 
 import java.io.IOException;
+
+import Exceptions.CommandException;
 import Sessions.SessionManager;
 
 public class SwitchSessionCommand implements CreateCommand{
@@ -11,9 +13,9 @@ public class SwitchSessionCommand implements CreateCommand{
     }
 
     @Override
-    public void execute(String... args) throws IOException {
+    public void execute(String... args) throws IOException, CommandException {
         if(args.length != 1){
-            throw new IllegalArgumentException("You need to input 1 session ID.");
+            throw new CommandException("You need to input 1 session ID.");
         }
 
         try {

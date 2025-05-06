@@ -1,5 +1,7 @@
 package ImageHandling;
 
+import Exceptions.CommandException;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,6 +9,7 @@ import java.util.List;
 
 public class PPMImage extends Image {
     private int[][][] pixels;
+    private static final double DEFAULT_THRESHOLD = 0.5;
 
     public PPMImage(File file) {
         super(file);
@@ -41,6 +44,13 @@ public class PPMImage extends Image {
 
     @Override
     public void applyGrayscale() {
+        double complianceRatio = getGrayscaleComplianceRatio();
+        if (complianceRatio >= DEFAULT_THRESHOLD) {
+            System.out.printf("Skipped grayscale: %.1f%% of pixels already grayscale.%n",
+                    complianceRatio * 100);
+            return;
+        }
+
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 int gray = (int) (0.3 * pixels[i][j][0] + 0.59 * pixels[i][j][1] + 0.11 * pixels[i][j][2]);
@@ -52,6 +62,13 @@ public class PPMImage extends Image {
 
     @Override
     public void applyMonochrome() {
+        double complianceRatio = getMonochromeComplianceRatio();
+        if (complianceRatio >= DEFAULT_THRESHOLD) {
+            System.out.printf("Skipped monochrome: %.1f%% of pixels already monochrome.%n",
+                    complianceRatio * 100);
+            return;
+        }
+
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 int avg = (pixels[i][j][0] + pixels[i][j][1] + pixels[i][j][2]) / 3;
@@ -90,11 +107,15 @@ public class PPMImage extends Image {
             }
         }
         pixels = newPixels;
+
+        int temp = width;
+        width = height;
+        height = temp;
         System.out.println("Applied " + direction + " rotation to PPM image.");
     }
 
     @Override
-    public void applyCollage(String layout, String img1, String img2, String outimg) {
+    public void applyCollage(String direction, Image image1, Image image2) throws CommandException {
         //to do
     }
 
@@ -136,5 +157,35 @@ public class PPMImage extends Image {
         return copy;
     }
 
+    public double getGrayscaleComplianceRatio() {
+        int grayscalePixels = 0;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (pixels[i][j][0] == pixels[i][j][1] &&
+                        pixels[i][j][1] == pixels[i][j][2]) {
+                    grayscalePixels++;
+                }
+            }
+        }
+        return (double) grayscalePixels / (width * height);
+    }
+
+    public double getMonochromeComplianceRatio() {
+        int monoPixels = 0;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                boolean isBlack = (pixels[i][j][0] == 0 &&
+                        pixels[i][j][1] == 0 &&
+                        pixels[i][j][2] == 0);
+                boolean isWhite = (pixels[i][j][0] == maxColorValue &&
+                        pixels[i][j][1] == maxColorValue &&
+                        pixels[i][j][2] == maxColorValue);
+                if (isBlack || isWhite) {
+                    monoPixels++;
+                }
+            }
+        }
+        return (double) monoPixels / (width * height);
+    }
 }
 
