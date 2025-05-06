@@ -9,7 +9,6 @@ import java.util.List;
 
 public class PPMImage extends Image {
     private int[][][] pixels;
-    private static final double DEFAULT_THRESHOLD = 0.5;
 
     public PPMImage(File file) {
         super(file);
@@ -44,10 +43,19 @@ public class PPMImage extends Image {
 
     @Override
     public void applyGrayscale() {
-        double complianceRatio = getGrayscaleComplianceRatio();
-        if (complianceRatio >= DEFAULT_THRESHOLD) {
-            System.out.printf("Skipped grayscale: %.1f%% of pixels already grayscale.%n",
-                    complianceRatio * 100);
+        boolean isGrayscale = true;
+        for (int i = 0; i < height && isGrayscale; i++) {
+            for (int j = 0; j < width; j++) {
+                if (pixels[i][j][0] != pixels[i][j][1] ||
+                        pixels[i][j][1] != pixels[i][j][2]) {
+                    isGrayscale = false;
+                    break;
+                }
+            }
+        }
+
+        if (isGrayscale) {
+            System.out.println("Image is already grayscale. No transformation applied.");
             return;
         }
 
@@ -62,10 +70,24 @@ public class PPMImage extends Image {
 
     @Override
     public void applyMonochrome() {
-        double complianceRatio = getMonochromeComplianceRatio();
-        if (complianceRatio >= DEFAULT_THRESHOLD) {
-            System.out.printf("Skipped monochrome: %.1f%% of pixels already monochrome.%n",
-                    complianceRatio * 100);
+        boolean isMonochrome = true;
+        for (int i = 0; i < height && isMonochrome; i++) {
+            for (int j = 0; j < width; j++) {
+                boolean isBlack = (pixels[i][j][0] == 0 &&
+                        pixels[i][j][1] == 0 &&
+                        pixels[i][j][2] == 0);
+                boolean isWhite = (pixels[i][j][0] == maxColorValue &&
+                        pixels[i][j][1] == maxColorValue &&
+                        pixels[i][j][2] == maxColorValue);
+                if (!isBlack && !isWhite) {
+                    isMonochrome = false;
+                    break;
+                }
+            }
+        }
+
+        if (isMonochrome) {
+            System.out.println("Image is already monochrome. No transformation applied.");
             return;
         }
 
@@ -155,37 +177,6 @@ public class PPMImage extends Image {
         }
 
         return copy;
-    }
-
-    public double getGrayscaleComplianceRatio() {
-        int grayscalePixels = 0;
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                if (pixels[i][j][0] == pixels[i][j][1] &&
-                        pixels[i][j][1] == pixels[i][j][2]) {
-                    grayscalePixels++;
-                }
-            }
-        }
-        return (double) grayscalePixels / (width * height);
-    }
-
-    public double getMonochromeComplianceRatio() {
-        int monoPixels = 0;
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                boolean isBlack = (pixels[i][j][0] == 0 &&
-                        pixels[i][j][1] == 0 &&
-                        pixels[i][j][2] == 0);
-                boolean isWhite = (pixels[i][j][0] == maxColorValue &&
-                        pixels[i][j][1] == maxColorValue &&
-                        pixels[i][j][2] == maxColorValue);
-                if (isBlack || isWhite) {
-                    monoPixels++;
-                }
-            }
-        }
-        return (double) monoPixels / (width * height);
     }
 }
 

@@ -9,7 +9,6 @@ import java.util.List;
 
 public class PGMImage extends Image {
     private int[][] pixels;
-    private static final double DEFAULT_THRESHOLD = 0.5;
 
     public PGMImage(File file) {
         super(file);
@@ -47,10 +46,19 @@ public class PGMImage extends Image {
 
     @Override
     public void applyMonochrome() {
-        double complianceRatio = getMonochromeComplianceRatio();
-        if (complianceRatio >= DEFAULT_THRESHOLD) {
-            System.out.printf("Skipped monochrome: %.1f%% of pixels already monochrome.%n",
-                    complianceRatio * 100);
+        boolean isMonochrome = true;
+        for (int i = 0; i < height && isMonochrome; i++) {
+            for (int j = 0; j < width; j++) {
+                int val = pixels[i][j];
+                if (val != 0 && val != maxColorValue) {
+                    isMonochrome = false;
+                    break;
+                }
+            }
+        }
+
+        if (isMonochrome) {
+            System.out.println("Image is already monochrome. No transformation applied.");
             return;
         }
 
@@ -130,18 +138,6 @@ public class PGMImage extends Image {
         }
 
         return copy;
-    }
-
-    public double getMonochromeComplianceRatio() {
-        int monoPixels = 0;
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                if (pixels[i][j] == 0 || pixels[i][j] == maxColorValue) {
-                    monoPixels++;
-                }
-            }
-        }
-        return (double) monoPixels / (width * height);
     }
 }
 
