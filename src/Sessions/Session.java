@@ -25,10 +25,6 @@ public class Session {
         return images;
     }
 
-    public void addImage(Image image) {
-        images.add(image);
-    }
-
     public void addTransformation(String transformation) {
         transformations.add(transformation);
     }

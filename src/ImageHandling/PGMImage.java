@@ -9,6 +9,7 @@ import java.util.List;
 
 public class PGMImage extends Image {
     private int[][] pixels;
+    private int maxColorValue;
 
     public PGMImage(File file) {
         super(file);

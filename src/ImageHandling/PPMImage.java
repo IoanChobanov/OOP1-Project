@@ -9,6 +9,8 @@ import java.util.List;
 
 public class PPMImage extends Image {
     private int[][][] pixels;
+    private int maxColorValue;
+
 
     public PPMImage(File file) {
         super(file);

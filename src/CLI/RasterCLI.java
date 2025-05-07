@@ -5,6 +5,7 @@ import Exceptions.CommandException;
 import Sessions.SessionManager;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -27,33 +28,23 @@ public class RasterCLI {
             if (input.isEmpty()) continue;
 
             String[] parts = input.split("\\s+");
-            String command = null;
-            String[] args = new String[0];
+            String command = parts[0].toLowerCase();
+            String[] args = Arrays.copyOfRange(parts, 1, parts.length);
 
-            for (int i = parts.length; i > 0; i--) {
-                String candidate = String.join(" ", java.util.Arrays.copyOfRange(parts, 0, i)).toLowerCase();
-                if (commands.containsKey(candidate)) {
-                    command = candidate;
-                    args = java.util.Arrays.copyOfRange(parts, i, parts.length);
-                    break;
-                }
-            }
-
-            if (command == null) {
+            if (!commands.containsKey(command)) {
                 System.out.println("Unknown command. Type 'help' for a list of commands.");
                 continue;
             }
 
-            CreateCommand cmd = commands.get(command);
             try {
-                cmd.execute(args);
+                commands.get(command).execute(args);
             } catch (IOException | CommandException e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
     }
 
-    public void InitializeCommands() {
+    private void InitializeCommands() {
         commands.put("load", new LoadCommand(sessionManager));
         commands.put("save", new SaveCommand(sessionManager));
         commands.put("saveas", new SaveAsCommand(sessionManager));
@@ -66,7 +57,7 @@ public class RasterCLI {
         commands.put("rotate", new RotateCommand(sessionManager));
         commands.put("undo", new UndoCommand(sessionManager));
         commands.put("add", new AddCommand(sessionManager));
-        commands.put("session info", new SessionInfoCommand(sessionManager));
+        commands.put("sessioninfo", new SessionInfoCommand(sessionManager));
         commands.put("switch", new SwitchSessionCommand(sessionManager));
         commands.put("collage", new CollageCommand(sessionManager));
     }

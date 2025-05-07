@@ -8,7 +8,6 @@ import java.io.IOException;
 public abstract class Image {
     protected int width;
     protected int height;
-    protected int maxColorValue;
     protected String format;
     protected File file;
 
