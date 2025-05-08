@@ -13,7 +13,7 @@ public class PGMImage extends Image {
 
     public PGMImage(File file) {
         super(file);
-        this.format = "PGM";
+        this.format = "pgm";
     }
 
     @Override

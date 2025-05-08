@@ -26,13 +26,21 @@ public class SaveAsCommand implements CreateCommand {
         Image original = activeSession.getImages().get(0);
         Image clone = original.cloneImage();
 
+        String fileName = args [0];
+        String expectedExtension = "." + clone.getFormat();
+        if(!fileName.endsWith(expectedExtension)){
+            throw new CommandException("Please input the correct file type.");
+        }
+
         for (String transformation : activeSession.getTransformations()) {
             applyTransformation(clone, transformation);
         }
 
+        activeSession.getTransformations().clear();
+
         File outputFile = new File(args[0]);
         clone.save(outputFile);
-        System.out.println("Successfully saved as " + args[0]);
+        System.out.println("Successfully saved as " + args[0] + "\n Transformation queue reset.");
     }
 
     private void applyTransformation(Image image, String transformation) {

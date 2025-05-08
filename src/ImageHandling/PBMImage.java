@@ -12,7 +12,7 @@ public class PBMImage extends Image {
 
     public PBMImage(File file) {
         super(file);
-        this.format = "PBM";
+        this.format = "pbm";
     }
 
     @Override

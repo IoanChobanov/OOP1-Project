@@ -23,11 +23,15 @@ public class SaveCommand implements CreateCommand{
             for (String transformation : activeSession.getTransformations()) {
                 applyTransformation(image, transformation);
             }
-            File outputFile = new File(image.getFile().getAbsolutePath());
-            image.save(outputFile);
         }
 
-        System.out.println("Saved successfully!");
+        activeSession.getTransformations().clear();
+
+        for (Image image : activeSession.getImages()) {
+            image.save(new File(image.getFile().getAbsolutePath()));
+        }
+
+        System.out.println("Saved successfully!" + "\n Transformation queue reset.");
     }
 
     private void applyTransformation(Image image, String transformation) {

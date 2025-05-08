@@ -14,7 +14,7 @@ public class PPMImage extends Image {
 
     public PPMImage(File file) {
         super(file);
-        this.format = "PPM";
+        this.format = "ppm";
     }
 
     @Override

@@ -22,6 +22,10 @@ public class SessionManager {
         return activeSession;
     }
 
+    public int sessionSize(){
+        return this.sessions.size();
+    }
+
     public Session getActiveSession() {
         return activeSession;
     }

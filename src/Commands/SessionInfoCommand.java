@@ -20,7 +20,7 @@ public class SessionInfoCommand implements CreateCommand {
         System.out.println(activeSession.getTransformations().isEmpty() ?
                 "No transformations queued." :
                 "Transformations queued (" + activeSession.getTransformations().size() + "): " + activeSession.getTransformations());
-        System.out.println("\nImages in session (" + activeSession.getImages().size() + "):");
+        System.out.println("Images in session (" + activeSession.getImages().size() + "):");
 
         int imageCounter = 1;
         for (Image image : activeSession.getImages()) {
