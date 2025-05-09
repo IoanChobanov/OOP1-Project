@@ -15,7 +15,7 @@ public class HelpCommand implements CreateCommand{
                 "rotate <left|right> - Rotates images 90° in the given direction.\n" +
                 "undo - Undoes the last transformation.\n" +
                 "add <image> - Adds an image to the session.\n" +
-                "session info - Displays current session details.\n" +
+                "sessioninfo - Displays current session details.\n" +
                 "switch <session_id> - Switches to a different session.\n" +
                 "collage <horizontal|vertical> <img1> <img2> <outimg> - Creates a collage.\n";
 
