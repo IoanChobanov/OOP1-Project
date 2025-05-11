@@ -139,8 +139,63 @@ public class PPMImage extends Image {
     }
 
     @Override
-    public void applyCollage(String direction, Image image1, Image image2) throws CommandException {
-        //to do
+    public void applyCollage(String direction, Image img1, Image img2, String outImageName) {
+        PPMImage image1 = (PPMImage) img1;
+        PPMImage image2 = (PPMImage) img2;
+
+        if (direction.equals("horizontal")) {
+            createHorizontalCollage(image1, image2, outImageName);
+        } else {
+            createVerticalCollage(image1, image2, outImageName);
+        }
+    }
+
+    private void createHorizontalCollage(PPMImage image1, PPMImage image2, String outImageName) {
+        this.width = image1.width + image2.width;
+        this.height = image1.height;
+        this.maxColorValue = Math.max(image1.maxColorValue, image2.maxColorValue);
+        this.pixels = new int[height][width][3];
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < image1.width; x++) {
+                System.arraycopy(image1.pixels[y][x], 0, this.pixels[y][x], 0, 3);
+            }
+        }
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < image2.width; x++) {
+                System.arraycopy(
+                        image2.pixels[y][x], 0,
+                        this.pixels[y][x + image1.width], 0, 3
+                );
+            }
+        }
+
+        this.file = new File(outImageName);
+    }
+
+    private void createVerticalCollage(PPMImage image1, PPMImage image2, String outImageName) {
+        this.width = image1.width;
+        this.height = image1.height + image2.height;
+        this.maxColorValue = Math.max(image1.maxColorValue, image2.maxColorValue);
+        this.pixels = new int[height][width][3];
+
+        for (int y = 0; y < image1.height; y++) {
+            for (int x = 0; x < width; x++) {
+                System.arraycopy(image1.pixels[y][x], 0, this.pixels[y][x], 0, 3);
+            }
+        }
+
+        for (int y = 0; y < image2.height; y++) {
+            for (int x = 0; x < width; x++) {
+                System.arraycopy(
+                        image2.pixels[y][x], 0,
+                        this.pixels[y + image1.height][x], 0, 3
+                );
+            }
+        }
+
+        this.file = new File(outImageName);
     }
 
     @Override

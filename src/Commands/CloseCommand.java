@@ -18,6 +18,11 @@ public class CloseCommand implements CreateCommand {
 
         System.out.println("Session closed successfully. All unsaved changes were discarded.");
         System.out.println("Remaining sessions: " + sessionManager.sessionSize());
+        if(sessionManager.sessionSize()!=0){
+            for (Integer sessionId : sessionManager.getSessions().keySet()){
+                System.out.println("Available sessions (ID): " + sessionId);
+            }
+        }
     }
 }
 

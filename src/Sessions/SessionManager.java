@@ -26,6 +26,10 @@ public class SessionManager {
         return this.sessions.size();
     }
 
+    public Map<Integer, Session> getSessions() {
+        return sessions;
+    }
+
     public Session getActiveSession() {
         return activeSession;
     }

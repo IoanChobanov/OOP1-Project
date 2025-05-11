@@ -52,14 +52,6 @@ public class SaveCommand implements CreateCommand{
             case "rotate":
                 image.applyRotation(arguments);
                 break;
-            case "collage":
-                String[] collageArgs = arguments.split(" ");
-                if (collageArgs.length == 4) {
-                    //to do
-                } else {
-                    System.out.println("Invalid collage arguments.");
-                }
-                break;
             default:
                 System.out.println("Unknown transformation: " + action);
                 break;

@@ -79,8 +79,47 @@ public class PBMImage extends Image {
     }
 
     @Override
-    public void applyCollage(String direction, Image image1, Image image2) throws CommandException {
-        //to do
+    public void applyCollage(String direction, Image img1, Image img2, String outImageName) {
+        PBMImage image1 = (PBMImage) img1;
+        PBMImage image2 = (PBMImage) img2;
+
+        if (direction.equals("horizontal")) {
+            createHorizontalCollage(image1, image2, outImageName);
+        } else {
+            createVerticalCollage(image1, image2, outImageName);
+        }
+    }
+
+    private void createHorizontalCollage(PBMImage image1, PBMImage image2, String outImageName) {
+        this.width = image1.width + image2.width;
+        this.height = image1.height;
+        this.pixels = new boolean[height][width];
+
+        for (int y = 0; y < height; y++) {
+            System.arraycopy(image1.pixels[y], 0, this.pixels[y], 0, image1.width);
+        }
+
+        for (int y = 0; y < height; y++) {
+            System.arraycopy(image2.pixels[y], 0, this.pixels[y], image1.width, image2.width);
+        }
+
+        this.file = new File(outImageName);
+    }
+
+    private void createVerticalCollage(PBMImage image1, PBMImage image2, String outImageName) {
+        this.width = image1.width;
+        this.height = image1.height + image2.height;
+        this.pixels = new boolean[height][width];
+
+        for (int y = 0; y < image1.height; y++) {
+            System.arraycopy(image1.pixels[y], 0, this.pixels[y], 0, width);
+        }
+
+        for (int y = 0; y < image2.height; y++) {
+            System.arraycopy(image2.pixels[y], 0, this.pixels[y + image1.height], 0, width);
+        }
+
+        this.file = new File(outImageName);
     }
 
     @Override

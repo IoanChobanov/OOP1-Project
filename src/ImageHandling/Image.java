@@ -1,7 +1,6 @@
 package ImageHandling;
 
 import Exceptions.CommandException;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -18,12 +17,11 @@ public abstract class Image {
     public abstract void load() throws IOException;
     public abstract void save(File outputFile) throws IOException;
     public abstract Image cloneImage();
-
     public abstract void applyGrayscale();
     public abstract void applyMonochrome();
     public abstract void applyNegative();
     public abstract void applyRotation(String direction);
-    public abstract void applyCollage(String direction, Image image1, Image image2) throws CommandException;
+    public abstract void applyCollage(String direction, Image image1, Image image2, String outImage) throws CommandException;
 
     public String getFormat() {
         return format;
