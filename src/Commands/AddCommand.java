@@ -32,10 +32,11 @@ public class AddCommand implements CreateCommand {
             }
         }
 
+        String fileName = file.getName();
         for (Image img : activeSession.getImages()) {
-            if (img.getFile().getName().equals(file.getName())) {
-                System.out.println("Image " + file.getName() + " already exists in session. Skipping.");
-                return;
+            if (img.getFile().getName().equals(fileName)) {
+                throw new CommandException("Image '" + fileName +
+                        "' already exists in current session");
             }
         }
 

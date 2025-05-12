@@ -2,6 +2,7 @@ package Commands;
 
 import Exceptions.CommandException;
 import ImageHandling.Image;
+import ImageHandling.ImageTransformer;
 import Sessions.Session;
 import Sessions.SessionManager;
 
@@ -20,49 +21,28 @@ public class SaveAsCommand implements CreateCommand {
         Session activeSession = sessionManager.getValidatedActiveSession();
 
         if (args.length != 1) {
-            throw new CommandException("Expected 1 argument. Use 'help' for more information.");
+            throw new CommandException("Expected exactly 1 argument: output filename");
+        }
+
+        if (activeSession.getImages().isEmpty()) {
+            throw new CommandException("No images in session to save");
         }
 
         Image original = activeSession.getImages().get(0);
         Image clone = original.cloneImage();
 
-        String fileName = args [0];
+        String fileName = args[0];
         String expectedExtension = "." + clone.getFormat();
-        if(!fileName.endsWith(expectedExtension)){
-            throw new CommandException("Please input the correct file type.");
+        if (!fileName.endsWith(expectedExtension)) {
+            throw new CommandException("Output filename must end with " + expectedExtension +
+                    " to match image format");
         }
 
-        for (String transformation : activeSession.getTransformations()) {
-            applyTransformation(clone, transformation);
-        }
-
+        ImageTransformer.applyTransformations(clone, activeSession.getTransformations());
         activeSession.getTransformations().clear();
 
-        File outputFile = new File(args[0]);
+        File outputFile = new File(fileName);
         clone.save(outputFile);
-        System.out.println("Successfully saved as " + args[0] + "\n Transformation queue reset.");
-    }
-
-    private void applyTransformation(Image image, String transformation) {
-        String[] parts = transformation.split("_", 2);
-        String action = parts[0];
-        String arguments = (parts.length > 1) ? parts[1] : "";
-
-        switch (action) {
-            case "grayscale":
-                image.applyGrayscale();
-                break;
-            case "monochrome":
-                image.applyMonochrome();
-                break;
-            case "negative":
-                image.applyNegative();
-                break;
-            case "rotate":
-                image.applyRotation(arguments);
-                break;
-            default:
-                System.out.println("Unknown transformation: " + action);
-        }
+        System.out.println("Successfully saved as " + fileName + "\nTransformation queue reset.");
     }
 }

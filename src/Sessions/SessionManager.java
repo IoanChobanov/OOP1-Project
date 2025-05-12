@@ -17,7 +17,7 @@ public class SessionManager {
 
     public Session getValidatedActiveSession() throws CommandException {
         if (activeSession == null) {
-            throw new CommandException("No active session. Use 'load' to start a new session or switch to an existing one.");
+            throw new CommandException("No active session. Use 'load <file...>' to start a new session or switch to an existing one.");
         }
         return activeSession;
     }
