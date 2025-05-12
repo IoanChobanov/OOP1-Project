@@ -9,6 +9,9 @@ import Sessions.SessionManager;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Клас, който имплементира добавяне на изображения в активна сесия.
+ */
 public class AddCommand implements CreateCommand {
     private final SessionManager sessionManager;
 
@@ -16,6 +19,12 @@ public class AddCommand implements CreateCommand {
         this.sessionManager = sessionManager;
     }
 
+    /**
+     * Метод, който добавя изображение към текущата сесия.
+     * @param args Един или повече аргументи подадени от менюто.
+     * @throws CommandException Обработва грешки при неправилно въведени аргументи.
+     * @throws IOException Обработва грешки, свързани с файлова обработка.
+     */
     @Override
     public void execute(String... args) throws CommandException, IOException {
         Session activeSession = sessionManager.getValidatedActiveSession();

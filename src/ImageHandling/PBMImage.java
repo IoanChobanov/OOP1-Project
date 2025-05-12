@@ -1,12 +1,13 @@
 package ImageHandling;
 
-import Exceptions.CommandException;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
+/**
+ * Клас за работа с PBM изображения.
+ */
 public class PBMImage extends Image {
     private boolean[][] pixels;
 
@@ -15,6 +16,10 @@ public class PBMImage extends Image {
         this.format = "pbm";
     }
 
+    /**
+     * Зарежда изображението от файл и парсира данните.
+     * @throws IOException при грешка при четене или невалиден формат.
+     */
     @Override
     public void load() throws IOException {
         List<String> lines = Files.readAllLines(file.toPath());
@@ -38,16 +43,25 @@ public class PBMImage extends Image {
         System.out.println("PBM Image: " + width + "x" + height);
     }
 
+    /**
+     * Прилага grayscale трансформация (не се поддържа за PBM).
+     */
     @Override
     public void applyGrayscale() {
         System.out.println("Grayscale transformation not suitable for PBM.");
     }
 
+    /**
+     * Прилага monochrome трансформация (не се поддържа за PBM).
+     */
     @Override
     public void applyMonochrome() {
         System.out.println("Monochrome transformation not suitable for PBM.");
     }
 
+    /**
+     * Обръща цветовете на изображението (негатив).
+     */
     @Override
     public void applyNegative() {
         for (int i = 0; i < height; i++) {
@@ -58,6 +72,10 @@ public class PBMImage extends Image {
         System.out.println("Applied negative to PBM image.");
     }
 
+    /**
+     * Завърта изображението на 90 градуса.
+     * @param direction Посока на завъртане ("left"/"right").
+     */
     @Override
     public void applyRotation(String direction) {
         boolean[][] newPixels = new boolean[width][height];
@@ -78,6 +96,13 @@ public class PBMImage extends Image {
         System.out.println("Applied " + direction + " rotation to PBM image.");
     }
 
+    /**
+     * Създава колаж от текущото и друго изображение.
+     * @param direction Ориентация ("horizontal"/"vertical").
+     * @param img1 Първо изображение за колажа.
+     * @param img2 Второ изображение за колажа.
+     * @param outImageName Име на изходното изображение.
+     */
     @Override
     public void applyCollage(String direction, Image img1, Image img2, String outImageName) {
         PBMImage image1 = (PBMImage) img1;
@@ -90,6 +115,12 @@ public class PBMImage extends Image {
         }
     }
 
+    /**
+     * Създава хоризонтален колаж.
+     * @param image1 Първо изображение.
+     * @param image2 Второ изображение.
+     * @param outImageName Име на изходния файл.
+     */
     private void createHorizontalCollage(PBMImage image1, PBMImage image2, String outImageName) {
         this.width = image1.width + image2.width;
         this.height = image1.height;
@@ -106,6 +137,12 @@ public class PBMImage extends Image {
         this.file = new File(outImageName);
     }
 
+    /**
+     * Създава вертикален колаж.
+     * @param image1 Първо изображение.
+     * @param image2 Второ изображение.
+     * @param outImageName Име на изходния файл.
+     */
     private void createVerticalCollage(PBMImage image1, PBMImage image2, String outImageName) {
         this.width = image1.width;
         this.height = image1.height + image2.height;
@@ -122,6 +159,11 @@ public class PBMImage extends Image {
         this.file = new File(outImageName);
     }
 
+    /**
+     * Запазва изображението във файл.
+     * @param outputFile Файлът, в който да се запише.
+     * @throws IOException при грешка при запис.
+     */
     @Override
     public void save(File outputFile) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -139,6 +181,10 @@ public class PBMImage extends Image {
         System.out.println("Saved PBM image to " + outputFile.getAbsolutePath());
     }
 
+    /**
+     * Създава копие на текущото изображение.
+     * @return Нова инстанция с идентични данни.
+     */
     @Override
     public Image cloneImage() {
         PBMImage clone = new PBMImage(this.file);

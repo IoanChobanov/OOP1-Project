@@ -9,6 +9,9 @@ import Sessions.SessionManager;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Клас който прилага всички трансформации добавени в сесията към първото изображение в сесията и го записва под ново име.
+ */
 public class SaveAsCommand implements CreateCommand {
     private final SessionManager sessionManager;
 
@@ -16,6 +19,12 @@ public class SaveAsCommand implements CreateCommand {
         this.sessionManager = sessionManager;
     }
 
+    /**
+     * Метод, който създава копие на първото изображение от текущата сесия и прилага трансформациите върху него.
+     * @param args Аргументите, подадени от менюто.
+     * @throws IOException При грешки в обработката на файлове.
+     * @throws CommandException При грешки по време на изпълнение.
+     */
     @Override
     public void execute(String... args) throws IOException, CommandException {
         Session activeSession = sessionManager.getValidatedActiveSession();

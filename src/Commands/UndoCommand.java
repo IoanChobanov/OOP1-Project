@@ -3,6 +3,9 @@ package Commands;
 import Sessions.Session;
 import Sessions.SessionManager;
 
+/**
+ * Клас, който добавя функционалст за премахване на последната трансформация от колекцията с трансформации.
+ */
 public class UndoCommand implements CreateCommand{
     private final SessionManager sessionManager;
 
@@ -10,6 +13,10 @@ public class UndoCommand implements CreateCommand{
         this.sessionManager = sessionManager;
     }
 
+    /**
+     * Метод, който премахва последно добавената трансформация от колекцията с трансформации.
+     * @param args Аргументите, подадени от менюто.
+     */
     @Override
     public void execute(String... args) {
         Session activeSession = sessionManager.getActiveSession();

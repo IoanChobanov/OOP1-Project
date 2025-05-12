@@ -1,9 +1,16 @@
 package Commands;
 
+/**
+ * Клас, който принтира всички възможни команди пред потребителя.
+ */
 public class HelpCommand implements CreateCommand{
+    /**
+     * Метод, който принтира наличните команди и как да се използват.
+     * @param args Аргументите, подадени от менюто.
+     */
     @Override
     public void execute(String... args) {
-        String helpMessage = "The following commands are supported:\n" +
+        System.out.println("The following commands are supported:\n" +
                 "load <file> - Starts a session and loads images.\n" +
                 "save - Saves all images in the current session.\n" +
                 "saveas <file> - Saves only the first image under a new name.\n" +
@@ -17,8 +24,6 @@ public class HelpCommand implements CreateCommand{
                 "add <image> - Adds an image to the session.\n" +
                 "sessioninfo - Displays current session details.\n" +
                 "switch <session_id> - Switches to a different session.\n" +
-                "collage <horizontal|vertical> <img1> <img2> <outimg> - Creates a collage.\n";
-
-        System.out.println(helpMessage);
+                "collage <horizontal|vertical> <img1> <img2> <outimg> - Creates a collage.\n");
     }
 }

@@ -9,6 +9,9 @@ import Sessions.SessionManager;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Клас, който прилага всички трансформации до момента на всички изображения в сесията.
+ */
 public class SaveCommand implements CreateCommand {
     private final SessionManager sessionManager;
 
@@ -16,6 +19,12 @@ public class SaveCommand implements CreateCommand {
         this.sessionManager = sessionManager;
     }
 
+    /**
+     * Метод, който прилага всички трансформации до момента на всички изображения в сесията.
+     * @param args Аргументите, подадени от менюто.
+     * @throws IOException При грешки в обработката на файлове.
+     * @throws CommandException При грешки по време на изпълнение.
+     */
     @Override
     public void execute(String... args) throws IOException, CommandException {
         Session activeSession = sessionManager.getValidatedActiveSession();

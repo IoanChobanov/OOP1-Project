@@ -5,6 +5,9 @@ import ImageHandling.Image;
 import Sessions.Session;
 import Sessions.SessionManager;
 
+/**
+ * Клас, който служи за принтиране на информация за текущата сесия.
+ */
 public class SessionInfoCommand implements CreateCommand {
     private final SessionManager sessionManager;
 
@@ -12,6 +15,11 @@ public class SessionInfoCommand implements CreateCommand {
         this.sessionManager = sessionManager;
     }
 
+    /**
+     * Метод, който принтира нужната информация за текущата сесия.
+     * @param args Аргументите, подадени от менюто.
+     * @throws CommandException При липсата на текуща сесия.
+     */
     @Override
     public void execute(String... args) throws CommandException {
         Session activeSession = sessionManager.getValidatedActiveSession();

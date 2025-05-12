@@ -10,15 +10,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Този клас управлява главното меню (CLI) на прокета.
+ */
 public class RasterCLI {
     private final Map<String, CreateCommand> commands = new HashMap<>();
     private final SessionManager sessionManager;
 
+    /**
+     * Конструктор, който инициализира класа за обработване на сесии и колекцията с команди.
+     */
     public RasterCLI() {
         this.sessionManager = new SessionManager();
         InitializeCommands();
     }
 
+    /**
+     * Метод, чрез който програмата изпълнява меню.
+     * Командите се въвеждат от потребителя.
+     * Обработват се и се изпращат към съотвения клас на всяка команда.
+     * При грешни команди се извеждат съобщения за грешка.
+     */
     public void run() {
         Scanner scanner = new Scanner(System.in);
 
@@ -44,6 +56,9 @@ public class RasterCLI {
         }
     }
 
+    /**
+     * Метод, който регистрира поддържаните команди в колекцията {@code commands}.
+     */
     private void InitializeCommands() {
         commands.put("load", new LoadCommand(sessionManager));
         commands.put("save", new SaveCommand(sessionManager));

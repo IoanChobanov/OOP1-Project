@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Клас, който създава уникална сесия с едно или повече изображния.
+ */
 public class LoadCommand implements CreateCommand {
     private final SessionManager sessionManager;
     private final AddCommand addCommand;
@@ -16,6 +19,12 @@ public class LoadCommand implements CreateCommand {
         this.addCommand = new AddCommand(sessionManager);
     }
 
+    /**
+     * Метод, който създава сесия с уникален номер и добавя изображения към нея.
+     * @param args Аргументите, подадени от менюто.
+     * @throws CommandException При невалидни аргументи и несъществуващи изображения в директорията с изображения.
+     * @throws IOException При грешка при добавянето на изображение.
+     */
     @Override
     public void execute(String... args) throws CommandException, IOException {
         if (args.length == 0) {

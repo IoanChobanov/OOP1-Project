@@ -1,12 +1,13 @@
 package ImageHandling;
 
-import Exceptions.CommandException;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
+/**
+ * Клас за работа с PPM изображения.
+ */
 public class PPMImage extends Image {
     private int[][][] pixels;
     private int maxColorValue;
@@ -17,6 +18,10 @@ public class PPMImage extends Image {
         this.format = "ppm";
     }
 
+    /**
+     * Зарежда изображението от файл и парсира данните.
+     * @throws IOException при грешка при четене или невалиден формат
+     */
     @Override
     public void load() throws IOException {
         List<String> lines = Files.readAllLines(file.toPath());
@@ -43,6 +48,9 @@ public class PPMImage extends Image {
         System.out.println("PPM Image: " + width + "x" + height);
     }
 
+    /**
+     * Преобразува изображението в grayscale.
+     */
     @Override
     public void applyGrayscale() {
         boolean isGrayscale = true;
@@ -70,6 +78,9 @@ public class PPMImage extends Image {
         System.out.println("Applied grayscale to PPM image.");
     }
 
+    /**
+     * Преобразува изображението в черно-бяло.
+     */
     @Override
     public void applyMonochrome() {
         boolean isMonochrome = true;
@@ -106,6 +117,9 @@ public class PPMImage extends Image {
         System.out.println("Applied monochrome to PPM image.");
     }
 
+    /**
+     * Обръща цветовете на изображението (негатив).
+     */
     @Override
     public void applyNegative() {
         for (int i = 0; i < height; i++) {
@@ -118,6 +132,10 @@ public class PPMImage extends Image {
         System.out.println("Applied negative to PPM image.");
     }
 
+    /**
+     * Завърта изображението на 90 градуса.
+     * @param direction Посока на завъртане ("left"/"right")
+     */
     @Override
     public void applyRotation(String direction) {
         int[][][] newPixels = new int[width][height][3];
@@ -138,6 +156,13 @@ public class PPMImage extends Image {
         System.out.println("Applied " + direction + " rotation to PPM image.");
     }
 
+    /**
+     * Създава колаж от текущото и друго изображение.
+     * @param direction Ориентация ("horizontal"/"vertical")
+     * @param img1 Първо изображение за колажа
+     * @param img2 Второ изображение за колажа
+     * @param outImageName Име на изходното изображение
+     */
     @Override
     public void applyCollage(String direction, Image img1, Image img2, String outImageName) {
         PPMImage image1 = (PPMImage) img1;
@@ -150,6 +175,12 @@ public class PPMImage extends Image {
         }
     }
 
+    /**
+     * Създава хоризонтален колаж.
+     * @param image1 Първо изображение
+     * @param image2 Второ изображение
+     * @param outImageName Име на изходния файл
+     */
     private void createHorizontalCollage(PPMImage image1, PPMImage image2, String outImageName) {
         this.width = image1.width + image2.width;
         this.height = image1.height;
@@ -174,6 +205,12 @@ public class PPMImage extends Image {
         this.file = new File(outImageName);
     }
 
+    /**
+     * Създава вертикален колаж.
+     * @param image1 Първо изображение
+     * @param image2 Второ изображение
+     * @param outImageName Име на изходния файл
+     */
     private void createVerticalCollage(PPMImage image1, PPMImage image2, String outImageName) {
         this.width = image1.width;
         this.height = image1.height + image2.height;
@@ -198,6 +235,11 @@ public class PPMImage extends Image {
         this.file = new File(outImageName);
     }
 
+    /**
+     * Запазва изображението във файл.
+     * @param outputFile Файлът, в който да се запише
+     * @throws IOException при грешка при запис
+     */
     @Override
     public void save(File outputFile) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -218,6 +260,10 @@ public class PPMImage extends Image {
         System.out.println("Saved PPM image to " + outputFile.getAbsolutePath());
     }
 
+    /**
+     * Създава копие на текущото изображение.
+     * @return Нова инстанция с идентични данни
+     */
     @Override
     public Image cloneImage() {
         PPMImage copy = new PPMImage(new File(file.getPath()));

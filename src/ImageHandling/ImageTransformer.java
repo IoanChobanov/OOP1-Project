@@ -2,13 +2,26 @@ package ImageHandling;
 
 import java.util.List;
 
+/**
+ * Клас, който прилага трансформациите от колекцията с трансформации върху дадено изображение.
+ */
 public class ImageTransformer {
+    /**
+     * Метод който минава през всички трансформации в колекцията от трансформации и ги прилага върху подаденото изображение.
+     * @param image Изображението, върху което ще се прилагат трансформациите.
+     * @param transformations Колекция, която съдържа трансформациите който ще се прилагат.
+     */
     public static void applyTransformations(Image image, List<String> transformations) {
         for (String transformation : transformations) {
             applyTransformation(image, transformation);
         }
     }
 
+    /**
+     * Метод, който обработвата подадената трансформация и избира кой метод да извика според аргументите.
+     * @param image Изображението върху, което ще се прилага трансформацията.
+     * @param transformation Низ името на трансформацията.
+     */
     private static void applyTransformation(Image image, String transformation) {
         String[] parts = transformation.split("_", 2);
         String action = parts[0];

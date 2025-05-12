@@ -4,6 +4,9 @@ import Exceptions.CommandException;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Абстрактен клас, който дефинира общите характеристики на трите вида изображения поддържани от това приложение.
+ */
 public abstract class Image {
     protected int width;
     protected int height;
