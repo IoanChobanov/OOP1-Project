@@ -1,5 +1,6 @@
 package Commands;
 
+import Exceptions.CommandException;
 import Sessions.Session;
 import Sessions.SessionManager;
 
@@ -18,19 +19,18 @@ public class UndoCommand implements CreateCommand{
      * @param args Аргументите, подадени от менюто.
      */
     @Override
-    public void execute(String... args) {
+    public void execute(String... args) throws CommandException {
         Session activeSession = sessionManager.getActiveSession();
 
         if (activeSession == null) {
-            System.out.println("No active session found.");
-            return;
+            throw new CommandException("No active session found.");
         }
 
         if (!activeSession.getTransformations().isEmpty()) {
             activeSession.removeLastTransformation();
             System.out.println("One change undone.");
         } else {
-            System.out.println("No transformations to undo.");
+            throw new CommandException("No transformations to undo.");
         }
     }
 }

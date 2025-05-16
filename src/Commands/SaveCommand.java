@@ -2,7 +2,7 @@ package Commands;
 
 import Exceptions.CommandException;
 import ImageHandling.Image;
-import ImageHandling.ImageTransformer;
+import ImageHandling.ImageTransformations;
 import Sessions.Session;
 import Sessions.SessionManager;
 
@@ -34,10 +34,12 @@ public class SaveCommand implements CreateCommand {
         }
 
         for (Image image : activeSession.getImages()) {
-            ImageTransformer.applyTransformations(image, activeSession.getTransformations());
+            ImageTransformations.applyTransformations(image, activeSession.getTransformations());
         }
 
-        activeSession.getTransformations().clear();
+        if(!activeSession.getTransformations().isEmpty()) {
+            activeSession.getTransformations().clear();
+        }
 
         for (Image image : activeSession.getImages()) {
             image.save(new File(image.getFile().getAbsolutePath()));

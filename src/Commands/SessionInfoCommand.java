@@ -17,7 +17,7 @@ public class SessionInfoCommand implements CreateCommand {
 
     /**
      * Метод, който принтира нужната информация за текущата сесия.
-     * @param args Аргументите, подадени от менюто.
+     * @param args Аргументите, подадени от менюто (В този случай не ни трябват).
      * @throws CommandException При липсата на текуща сесия.
      */
     @Override

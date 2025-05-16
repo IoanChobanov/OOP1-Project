@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Клас, който прилага трансформациите от колекцията с трансформации върху дадено изображение.
  */
-public class ImageTransformer {
+public class ImageTransformations {
     /**
      * Метод който минава през всички трансформации в колекцията от трансформации и ги прилага върху подаденото изображение.
      * @param image Изображението, върху което ще се прилагат трансформациите.
@@ -23,7 +23,7 @@ public class ImageTransformer {
      * @param transformation Низ името на трансформацията.
      */
     private static void applyTransformation(Image image, String transformation) {
-        String[] parts = transformation.split("_", 2);
+        String[] parts = transformation.split(" ", 2);
         String action = parts[0];
         String arguments = (parts.length > 1) ? parts[1] : "";
 

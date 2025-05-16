@@ -27,7 +27,7 @@ public class RotateCommand implements CreateCommand{
             throw new CommandException("Invalid arguments. Use 'rotate left' or 'rotate right'.");
         }
 
-        String transformation = "rotate_" + args[0];
+        String transformation = "rotate " + args[0];
         activeSession.addTransformation(transformation);
 
         System.out.println("Queued " + args[0] + " rotation for all images in the session.");

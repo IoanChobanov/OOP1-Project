@@ -128,9 +128,6 @@ public class PBMImage extends Image {
 
         for (int y = 0; y < height; y++) {
             System.arraycopy(image1.pixels[y], 0, this.pixels[y], 0, image1.width);
-        }
-
-        for (int y = 0; y < height; y++) {
             System.arraycopy(image2.pixels[y], 0, this.pixels[y], image1.width, image2.width);
         }
 
