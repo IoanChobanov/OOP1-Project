@@ -2,9 +2,10 @@ package Commands;
 
 import Exceptions.CommandException;
 import ImageHandling.Image;
-import ImageHandling.ImageTransformations;
 import Sessions.Session;
 import Sessions.SessionManager;
+import TransformationHandling.Transformation;
+import TransformationHandling.TransformationFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +48,12 @@ public class SaveAsCommand implements CreateCommand {
                     " to match image format");
         }
 
-        ImageTransformations.applyTransformations(clone, activeSession.getTransformations());
+        for (String transformationString : activeSession.getTransformations()) {
+            Transformation transformation =
+                    TransformationFactory.createTransformation(transformationString);
+            transformation.execute(clone);
+        }
+
         if(!activeSession.getTransformations().isEmpty()) {
             activeSession.getTransformations().clear();
         }
