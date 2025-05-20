@@ -5,7 +5,7 @@ import ImageHandling.Image;
 import Sessions.Session;
 import Sessions.SessionManager;
 import TransformationHandling.Transformation;
-import TransformationHandling.TransformationFactory;
+import TransformationHandling.TransformationHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class SaveCommand implements CreateCommand {
 
         for (Image image : activeSession.getImages()) {
             for (String transformationString : activeSession.getTransformations()) {
-                Transformation transformation = TransformationFactory.createTransformation(transformationString);
+                Transformation transformation = TransformationHandler.createTransformation(transformationString);
                 transformation.execute(image);
             }
         }

@@ -1,6 +1,6 @@
 package TransformationHandling;
 
-public class TransformationFactory {
+public class TransformationHandler {
     public static Transformation createTransformation(String transformationString) {
         String[] parts = transformationString.split(" ", 2);
         String action = parts[0];
