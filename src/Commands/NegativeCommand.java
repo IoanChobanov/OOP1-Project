@@ -3,6 +3,8 @@ package Commands;
 import Exceptions.CommandException;
 import Sessions.Session;
 import Sessions.SessionManager;
+import TransformationHandling.NegativeTransformation;
+import com.sun.org.apache.xpath.internal.operations.Neg;
 
 /**
  * Клас, който добавя negative към колекцията с трансформации.
@@ -22,7 +24,7 @@ public class NegativeCommand implements CreateCommand{
     @Override
     public void execute(String... args) throws CommandException {
         Session activeSession = sessionManager.getValidatedActiveSession();
-        activeSession.addTransformation("negative");
+        activeSession.addTransformation(new NegativeTransformation());
         System.out.println("Queued negative filter for all images in the session.");
     }
 }

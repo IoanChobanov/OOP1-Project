@@ -3,6 +3,7 @@ package Commands;
 import Exceptions.CommandException;
 import Sessions.Session;
 import Sessions.SessionManager;
+import TransformationHandling.GrayscaleTransformation;
 
 /**
  * Клас, който добавя grayscale към колекцията с трансформации.
@@ -22,7 +23,7 @@ public class GrayscaleCommand implements CreateCommand{
     @Override
     public void execute(String... args) throws CommandException {
         Session activeSession = sessionManager.getValidatedActiveSession();
-        activeSession.addTransformation("grayscale");
+        activeSession.addTransformation(new GrayscaleTransformation());
         System.out.println("Queued grayscale filter for all images in the session.");
     }
 }

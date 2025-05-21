@@ -3,6 +3,7 @@ package Commands;
 import Exceptions.CommandException;
 import Sessions.Session;
 import Sessions.SessionManager;
+import TransformationHandling.MonochromeTransformation;
 
 /**
  * Клас, който добавя monochrome към колекцията с трансформации.
@@ -22,7 +23,7 @@ public class MonochromeCommand implements CreateCommand{
     @Override
     public void execute(String... args) throws CommandException {
         Session activeSession = sessionManager.getValidatedActiveSession();
-        activeSession.addTransformation("monochrome");
+        activeSession.addTransformation(new MonochromeTransformation());
         System.out.println("Queued monochrome filter for all images in the session.");
     }
 }

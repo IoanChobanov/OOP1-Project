@@ -1,6 +1,7 @@
 package Sessions;
 
 import ImageHandling.Image;
+import TransformationHandling.Transformation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ public class Session {
     private static int sessionCounter = 0;
     private final int sessionId;
     private final List<Image> images;
-    private final List<String> transformations;
+    private final List<Transformation> transformations;
 
     public Session(List<Image> images) {
         this.sessionId = ++sessionCounter;
@@ -32,11 +33,11 @@ public class Session {
      * Добавя трансформация към колекцията с трансформации.
      * @param transformation Име на трансформацията.
      */
-    public void addTransformation(String transformation) {
+    public void addTransformation(Transformation transformation) {
         transformations.add(transformation);
     }
 
-    public List<String> getTransformations() {
+    public List<Transformation> getTransformations() {
         return transformations;
     }
 

@@ -5,7 +5,6 @@ import ImageHandling.Image;
 import Sessions.Session;
 import Sessions.SessionManager;
 import TransformationHandling.Transformation;
-import TransformationHandling.TransformationHandler;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,9 +47,7 @@ public class SaveAsCommand implements CreateCommand {
                     " to match image format");
         }
 
-        for (String transformationString : activeSession.getTransformations()) {
-            Transformation transformation =
-                    TransformationHandler.createTransformation(transformationString);
+        for (Transformation transformation : activeSession.getTransformations()) {
             transformation.execute(clone);
         }
 
